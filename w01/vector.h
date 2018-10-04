@@ -37,7 +37,7 @@ class vector
 {
 public:
    // constructors and destructors
-   vector();
+   vector(): numElements(0), numCapacity(0) { data = NULL; }
    vector(int numElements)                  throw (const char *);
    vector(int numElements, T & t)           throw (const char *);
    vector(const vector & rhs)        throw (const char *);

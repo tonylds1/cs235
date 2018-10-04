@@ -20,7 +20,7 @@ using std::endl;
 using std::string;
 using std::ostream;
 using std::ios;
-using namespace custom;
+using custom::vector;
 //using namespace std;
 
 // prototypes for our four test functions
@@ -172,7 +172,7 @@ void testFill()
       // Test1: integer vector with default constructor
       {
          // create 
-         vector <int> v1;
+         custom::vector <int> v1;
 
          cout << "Enter numbers, type 0 when done\n";
          int number;
@@ -198,7 +198,7 @@ void testFill()
 
       // Test2: character vector with non-default constructor
       {
-         vector <char> v1;
+         custom::vector <char> v1;
 
          cout << "Insert user-provided characters in the vector\n";
          cout << "Enter characters, type 'q' when done\n";
