@@ -2,7 +2,7 @@
  * Program:
  *    DOLLARS
  * Summary:
- *    This file contains the notion of money
+ *    This file contains the notion of money TONNNNY
  * Author
  *    Br. Helfrich
  ************************************************************************/
