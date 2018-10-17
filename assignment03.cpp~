@@ -305,7 +305,6 @@ void testErrors()
             {
    q.pop();
    cout << "\tCorrect! When we pop() with an empty queue, ";
-   cout << "nothing bad happens.\n";
 }
             catch (const char * error)
             {

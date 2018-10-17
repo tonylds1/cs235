@@ -1,20 +1,18 @@
 /***********************************************************************
- * Program:
+ * Implementation:
  *    STOCK
  * Summary:
  *    This will contain the implementation for stocksBuySell() as well
  *    as any other function or class implementation you need
  * Author
- *    Maximiliano Correa, Esteban Cabrera and Tony Moraes
+ *    <your names here>
  **********************************************************************/
-
 
 #include <iostream>    // for ISTREAM, OSTREAM, CIN, and COUT
 #include <string>      // for STRING
 #include <cassert>     // for ASSERT
-#include <sstream>     // for STRINGSTREAM
-#include "stock.h"     // for class definition
-
+#include "stock.h"     // for STOCK_TRANSACTION
+#include "queue.h"     // for QUEUE
 using namespace std;
 
 /************************************************
@@ -33,45 +31,6 @@ void stocksBuySell()
    cout << "  quit            - Display a final report and quit the program\n";
 
    // your code here...
-   Portfolio portfolio;
-   cout << "> ";
-   cin.ignore();
-   string line;
-   while (getline(cin, line))
-   {
-      // load the line into a stringstream
-      stringstream ss;
-      ss.str(line);
-
-      // declare variables
-      string option;
-      int shares;
-      Dollars price;
-
-      // read in the data
-      ss >> option; // >> shares >> price;
-      if (option == "buy")
-      {
-         ss >> shares >> price;
-         portfolio.buy(shares, price);
-      }
-      else if (option == "sell")
-      {
-         ss >> shares >> price;
-         portfolio.sell(shares, price);
-      }
-      else if (option == "display")
-      {
-         cout << portfolio;
-      }
-      else if (option == "quit")
-      {
-         break;
-      }
-      else if (option != "")
-         cout << "Unrecognized command, try again.\n";
-
-
-      cout << "> ";
-   }
 }
+
+
