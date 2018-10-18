@@ -71,7 +71,7 @@ public:
    // the various iterator interfaces
    class const_iterator;
    const_iterator cbegin() const     { return const_iterator (data);         }
-   const_iterator cend() const       { return iterator (data + numElements); }
+   const_iterator cend() const       { return const_iterator (data + numElements); }
 
    iterator find(const T & t) throw (const char *);
    const_iterator find(const T & t) const throw (const char *);
@@ -80,9 +80,9 @@ public:
    void erase(T & t) throw (const char *);
    void erase(iterator & it) throw (const char *);
 
-   set <T> & operator || (set <T> & rhs) throw (const char *);
-   set <T> & operator && (set <T> & rhs) throw (const char *);
-   set <T> & operator - (set <T> & rhs) throw (const char *);
+   set <T> operator || (set <T> & rhs) throw (const char *);
+   set <T> operator && (set <T> & rhs) throw (const char *);
+   set <T> operator - (set <T> & rhs) throw (const char *);
 
    // a debug utility to display the array
    // this gets compiled to nothing if NDEBUG is defined
@@ -501,7 +501,7 @@ int set <T> ::findIndex(const T & t) const throw (const char *)
  * return the position in the set of the given element
  *******************************************/
 template <class T>
-set <T> & set<T> :: operator || (set <T> & rhs) throw (const char *)
+set <T> set<T> :: operator || (set <T> & rhs) throw (const char *)
 {
     for (int i = 0; i < rhs.size(); i++)
     {
@@ -516,7 +516,7 @@ set <T> & set<T> :: operator || (set <T> & rhs) throw (const char *)
  * return the position in the set of the given element
  *******************************************/
 template <class T>
-set <T> & set<T> :: operator && (set <T> & rhs) throw (const char *)
+set <T> set<T> :: operator && (set <T> & rhs) throw (const char *)
 {
     set <T> intersection;
     int indexLhs = 0;
@@ -548,7 +548,7 @@ set <T> & set<T> :: operator && (set <T> & rhs) throw (const char *)
  * return the position in the set of the given element
  *******************************************/
 template <class T>
-set <T> & set<T> :: operator - (set <T> & rhs) throw (const char *)
+set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
 {
     set <T> difference;
     int indexLhs = 0;
