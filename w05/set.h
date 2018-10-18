@@ -50,7 +50,7 @@ public:
    int  size()     const { return numElements;             }
    int  capacity() const { return numCapacity;             }
    bool empty()    const { return numElements == 0;        }
-   void clear()    { numElements = 0; };
+   void clear()    { numElements = 0;                      };
 
    // set-specific interfaces
    // what would happen if I passed -1 or something greater than size?
@@ -65,20 +65,24 @@ public:
    
    // the various iterator interfaces
    class iterator;
-   iterator begin()      { return iterator (data); }
-   iterator end();       
+   iterator begin()      { return iterator (data);               }
+   iterator end()        { return iterator (data + numElements); };
 
    // the various iterator interfaces
    class const_iterator;
-   const_iterator cbegin() const     { return const_iterator (data); }
-   const_iterator cend() const;
+   const_iterator cbegin() const     { return const_iterator (data);         }
+   const_iterator cend() const       { return iterator (data + numElements); }
 
-   iterator find(T & t) throw (const char *);
+   iterator find(const T & t) throw (const char *);
+   const_iterator find(const T & t) const throw (const char *);
+
    void insert(const T & t)   throw (const char *);
+   void erase(T & t) throw (const char *);
    void erase(iterator & it) throw (const char *);
-   set operator || (set & rhs) throw (const char *);
-   set operator && (set & rhs) throw (const char *);
-   set operator - (set & rhs) throw (const char *);
+
+   set <T> & operator || (set <T> & rhs) throw (const char *);
+   set <T> & operator && (set <T> & rhs) throw (const char *);
+   set <T> & operator - (set <T> & rhs) throw (const char *);
 
    // a debug utility to display the array
    // this gets compiled to nothing if NDEBUG is defined
@@ -89,13 +93,8 @@ private:
    int numElements;               // the number of elements
    int numCapacity;           // the capacity
 
-   void resize(int newCapacity)
-   {
-      if (newCapacity > numElements)
-         throw "ERROR: this resize will loose data.";
-      
-      numCapacity = newCapacity;
-   }
+   void resize(int newCapacity)         throw (const char *);
+   int findIndex(const T & t) const     throw (const char *);
 };
 
 /**************************************************
@@ -123,6 +122,9 @@ public:
    // dereference operator
          T & operator * ()       { return *p; }
    const T & operator * () const { return *p; }
+
+   iterator & operator + (int value) { p = p + value; return *this; }
+   iterator & operator - (int value) { p = p - value; return *this; }
 
    // prefix increment
    iterator & operator ++ ()
@@ -182,7 +184,10 @@ public:
 
    // dereference operator
    const T & operator * () const { return *p; }
-   
+
+   const_iterator & operator + (int value) { p = p + value; return *this; }
+   const_iterator & operator - (int value) { p = p - value; return *this; }
+
    // prefix increment
    const_iterator & operator ++ ()
    {
@@ -218,40 +223,99 @@ private:
 };
 
 /********************************************
- * SET :: PUSH_BACK
+ * SET :: FIND
+ * returns a iterator pointed to the given element
+ ********************************************/
+template <class T>
+typename set <T> :: iterator set <T> :: find(const T & t) throw (const char *)
+{
+    int indexElement = findIndex(t);
+    return begin() + indexElement;
+}
+
+/********************************************
+ * SET :: FIND FOR CONST
+ * returns a iterator pointed to the given element
+ ********************************************/
+template <class T>
+typename set <T> :: const_iterator set <T> :: find(const T & t) const throw (const char *)
+{
+    int indexElement = findIndex(t);
+    return cbegin() + indexElement;
+}
+
+/********************************************
+ * SET :: INSERT
  * inserts an element in the collection and double the
  * object`s capacity when necessary.
  ********************************************/
 template <class T>
 void set <T> :: insert (const T & t) throw (const char*)
 {
-      assert(this->numElements <= this->numCapacity);
-      if (numCapacity == numElements) 
-            numCapacity = numCapacity * 2;
-      
-      data[numElements++] = t;
+    assert(numElements <= numCapacity);
+
+    if (0 == numCapacity)
+    {
+        resize(1);
+        numElements = 1;
+        data[0] = t;
+    }
+
+    if (findIndex(t) != numElements)
+    {
+        return;
+    }
+
+    if (numCapacity == numElements)
+    {
+         this->resize(numCapacity * 2);
+    }
+
+    int i = numElements;
+    for (i ; i >= 1; i--)
+    {
+        if (data[i - 1] < t)
+        {
+            break;
+        }
+
+        data[i] = data[i - 1];
+    }
+
+    data[i] = t;
+    numElements++;
 }
 
 /********************************************
- * SET :: END
- * Note that you have to use "typename" before
- * the return value type
+ * SET :: ERASE (VALUE)
+ * delete the given element and re-arrange the others
  ********************************************/
 template <class T>
-typename set <T> :: iterator set <T> :: end ()
+void set <T> :: erase(T & t) throw (const char *)
 {
-   return iterator (data + numElements);
+    int indexErase = findIndex(t);
+
+    if (indexErase == numElements)
+    {
+        return;
+    }
+
+    for (int i = indexErase; i < numElements - 1; i++)
+    {
+        data[i] = data[i + 1];
+    }
+
+    numElements--;
 }
 
 /********************************************
- * SET :: CEND
- * Note that you have to use "typename" before
- * the return value type
+ * SET :: ERASE (ITERATOR)
+ * delete the given element and re-arrange the others
  ********************************************/
 template <class T>
-typename set <T> :: const_iterator set <T> :: cend () const
+void set <T> :: erase(iterator & it) throw (const char *)
 {
-   return const_iterator (data + numElements);
+    erase(*it);
 }
 
 /*******************************************
@@ -262,9 +326,12 @@ set <T> & set <T> :: operator = (const set <T> & rhs)
           throw (const char *)
 {
    //avoid garbage content.
-   delete[] data;
+   this->clear();
 
-   for (int i = 0; i < numElements; i++)
+   if (this->capacity() < rhs.size())
+      this->resize(rhs.size());
+
+   for (int i = 0; i < rhs.size(); i++)
       this->insert(rhs.data[i]);
 
    return *this;
@@ -335,9 +402,8 @@ set <T> :: set(int numCapacity) throw (const char *)
       throw "ERROR: Unable to allocate buffer";
    }
 
-      
    // copy over the stuff
-   this->numElements = numElements;
+   this->numElements = numCapacity;
    this->numCapacity = numCapacity;
 }
 
@@ -365,6 +431,154 @@ set <T> :: set(int numCapacity, T & t) throw (const char *)
 
    data[0] = t;
 }
+
+/********************************************
+ * SET : RESIZE
+ * Increase the capacity, alocting new memory
+ *******************************************/
+template <class T>
+void set <T> ::resize(int newCapacity)  throw (const char *)
+{
+    if (newCapacity < numElements)
+    {
+        throw "ERROR: this resize will loose data.";
+    }
+
+    T * newData;
+    try
+    {
+        newData = new T[newCapacity];
+    }
+    catch (std::bad_alloc)
+    {
+        throw "ERROR: Unable to allocate buffer";
+    }
+
+    for (int i = 0; i < numElements; i++)
+    {
+        newData[i] = data[i];
+    }
+
+    delete[] data;
+    data = newData;
+    numCapacity = newCapacity;
+}
+
+/********************************************
+ * SET : FINDINDEX (SORTED)
+ * return the position in the set of the given element
+ *******************************************/
+template <class T>
+int set <T> ::findIndex(const T & t) const throw (const char *)
+{
+    int indexBegin = 0;
+    int indexEnd = numElements - 1;
+
+    while (indexBegin <= indexEnd)
+    {
+        int indexMiddle = (indexBegin + indexEnd) / 2;
+
+        if (t == data[indexMiddle])
+        {
+            return indexMiddle;
+        }
+
+        if (t < data[indexMiddle])
+        {
+            indexEnd = indexMiddle - 1;
+        }
+        else
+        {
+            indexBegin = indexMiddle + 1;
+        }
+    }
+
+    return numElements;
+}
+
+/********************************************
+ * SET : UNION
+ * return the position in the set of the given element
+ *******************************************/
+template <class T>
+set <T> & set<T> :: operator || (set <T> & rhs) throw (const char *)
+{
+    for (int i = 0; i < rhs.size(); i++)
+    {
+        insert(rhs[i]);
+    }
+
+    return *this;
+}
+
+/********************************************
+ * SET : INTERSECTION
+ * return the position in the set of the given element
+ *******************************************/
+template <class T>
+set <T> & set<T> :: operator && (set <T> & rhs) throw (const char *)
+{
+    set <T> intersection;
+    int indexLhs = 0;
+    int indexRhs = 0;
+
+    while (indexLhs < numElements && indexRhs < rhs.numElements)
+    {
+        if (data[indexLhs] == rhs.data[indexRhs])
+        {
+            intersection.insert(data[indexLhs]);
+            indexRhs++;
+            indexLhs++;
+        }
+        else if (data[indexLhs] < rhs.data[indexRhs])
+        {
+            indexLhs++;
+        }
+        else
+        {
+            indexRhs++;
+        }
+    }
+
+    return intersection;
+}
+
+/********************************************
+ * SET : DIFFERENCE
+ * return the position in the set of the given element
+ *******************************************/
+template <class T>
+set <T> & set<T> :: operator - (set <T> & rhs) throw (const char *)
+{
+    set <T> difference;
+    int indexLhs = 0;
+    int indexRhs = 0;
+
+    while (indexLhs < numElements || indexRhs < rhs.numElements)
+    {
+        if (data[indexLhs] == rhs.data[indexRhs])
+        {
+            indexRhs++;
+            indexLhs++;
+
+            continue;
+        }
+
+        if (data[indexLhs] < rhs.data[indexRhs])
+        {
+            difference.insert(data[indexLhs]);
+            indexLhs++;
+        }
+        else
+        {
+            difference.insert(rhs.data[indexRhs]);
+            indexRhs++;
+        }
+    }
+
+    return difference;
+}
+
 
 /********************************************
  * SET : DISPLAY
