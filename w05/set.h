@@ -554,7 +554,7 @@ set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
     int indexLhs = 0;
     int indexRhs = 0;
 
-    while (indexLhs < numElements || indexRhs < rhs.numElements)
+    while (indexLhs < numElements && indexRhs < rhs.numElements)
     {
         if (data[indexLhs] == rhs.data[indexRhs])
         {
