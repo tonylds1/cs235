@@ -49,7 +49,6 @@ bool read(char fileName[], custom::set <Card> & cards)
       Card card(fishName);
       cards.insert(card);
    }
-   cout << endl;
 
    // close
    fin.close();
@@ -64,15 +63,15 @@ bool read(char fileName[], custom::set <Card> & cards)
 void goFish()
 {
     custom::set <Card> cards;
-    read("hand.txt", cards);
+    read("/home/cs235/week05/hand.txt", cards);
 
     char fishName[256];
     int size = cards.size();
     int matches = 0;
 
-    cout << "We will play 5 rounds of Go Fish. Guess the card in the hand" << endl;
+    cout << "We will play 5 rounds of Go Fish.  Guess the card in the hand" << endl;
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 1; i < 6; i++) {
         cout << "round " << i << ": ";
         cin >> fishName;
 
@@ -81,14 +80,14 @@ void goFish()
 
         if (size != cards.size())
         {
-            cout << "You got a match!" << endl;
+            cout << "\tYou got a match!" << endl;
             matches++;
             size = cards.size();
 
             continue;
         }
 
-        cout << "Go Fish!" << endl;
+        cout << "\tGo Fish!" << endl;
     }
 
     cout << "You have " << matches << " matches!" << endl;
