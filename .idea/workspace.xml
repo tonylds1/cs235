@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="309a9b1a-b09f-4cb1-a2ca-4b701b212690" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/w05/set.h" beforeDir="false" afterPath="$PROJECT_DIR$/w05/set.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/w05/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/w05/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/w05/assignment05.tar" beforeDir="false" afterPath="$PROJECT_DIR$/w05/assignment05.tar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/w05/goFish.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/w05/goFish.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/w05/goFish.h" beforeDir="false" afterPath="$PROJECT_DIR$/w05/goFish.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/w05/goFish.o" beforeDir="false" afterPath="$PROJECT_DIR$/w05/goFish.o" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,41 +19,88 @@
     <session id="1912287730">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.22" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cpp" value="3" />
-          <entry key="h" value="14" />
+          <entry key="cpp" value="6" />
+          <entry key="h" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C++" value="17" />
+          <entry key="C++" value="23" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="h" value="3533" />
+          <entry key="cpp" value="893" />
+          <entry key="h" value="3567" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="C++" value="3533" />
+          <entry key="C++" value="4460" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/w05/set.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="556" column="36" selection-start-line="556" selection-start-column="36" selection-end-line="556" selection-end-column="36" />
+            <state relative-caret-position="289">
+              <caret line="478" column="54" lean-forward="true" selection-start-line="478" selection-start-column="54" selection-end-line="478" selection-end-column="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/w04/nowServing.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="22" column="18" selection-end-line="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/w05/goFish.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/w05/cardTest.cpp">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/w05/card.h">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/w05/card.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-450" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/w05/goFish.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
@@ -57,7 +108,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/w01/vector.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="244">
+            <state relative-caret-position="3765">
               <caret line="251" selection-start-line="251" selection-end-line="251" selection-end-column="8" />
             </state>
           </provider>
@@ -66,8 +117,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/w05/assignment05.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1275">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+            <state relative-caret-position="660">
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
             </state>
           </provider>
         </entry>
@@ -102,6 +153,9 @@
       <find>indexBe</find>
       <find>typenam</find>
       <find>find(</find>
+      <find>erase</find>
+      <find>erase(</find>
+      <find>findInde</find>
     </findStrings>
     <replaceStrings>
       <replace>SET_H</replace>
@@ -115,6 +169,8 @@
       <list>
         <option value="$PROJECT_DIR$/w05/assignment05.cpp" />
         <option value="$PROJECT_DIR$/w05/set.h" />
+        <option value="$PROJECT_DIR$/w05/goFish.h" />
+        <option value="$PROJECT_DIR$/w05/goFish.cpp" />
       </list>
     </option>
   </component>
@@ -126,37 +182,22 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.0" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1" />
-    <option name="y" value="-11" />
-    <option name="width" value="1922" />
-    <option name="height" value="1047" />
+    <option name="y" value="-4" />
+    <option name="width" value="1920" />
+    <option name="height" value="1039" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="cs235" type="b2602c69:ProjectViewProjectNode" />
               <item name="cs235" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cs235" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cs235" type="462c0819:PsiDirectoryNode" />
-              <item name="w01" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cs235" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cs235" type="462c0819:PsiDirectoryNode" />
-              <item name="w02" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="cs235" type="b2602c69:ProjectViewProjectNode" />
-              <item name="cs235" type="462c0819:PsiDirectoryNode" />
-              <item name="w03" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="cs235" type="b2602c69:ProjectViewProjectNode" />
@@ -172,11 +213,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documentos/BYU-I/CS 165 02" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
@@ -209,19 +250,20 @@
       <option name="presentableId" value="Default" />
       <updated>1539796796848</updated>
       <workItem from="1539796798264" duration="8633000" />
-      <workItem from="1539864806506" duration="24113000" />
+      <workItem from="1539864806506" duration="24946000" />
+      <workItem from="1539964802200" duration="4599000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32746000" />
+    <option name="totallyTimeSpent" value="38178000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-11" width="1922" height="1047" extended-state="6" />
+    <frame x="0" y="-4" width="1920" height="1039" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2524013" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.25506938" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.32930845" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
@@ -291,22 +333,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/w01/vector.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
+        <state relative-caret-position="3765">
           <caret line="251" selection-start-line="251" selection-end-line="251" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/w05/assignment05.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1275">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+        <state relative-caret-position="660">
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/w04/nowServing.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="22" column="18" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/w05/goFish.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/w05/card.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-450" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/w05/card.h">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/w05/cardTest.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/w05/set.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="556" column="36" selection-start-line="556" selection-start-column="36" selection-end-line="556" selection-end-column="36" />
+        <state relative-caret-position="289">
+          <caret line="478" column="54" lean-forward="true" selection-start-line="478" selection-start-column="54" selection-end-line="478" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/w05/goFish.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="85" column="32" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
         </state>
       </provider>
     </entry>
