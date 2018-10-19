@@ -403,7 +403,7 @@ set <T> :: set(int numCapacity) throw (const char *)
    }
 
    // copy over the stuff
-   this->numElements = numCapacity;
+   this->numElements = 0;
    this->numCapacity = numCapacity;
 }
 
@@ -503,12 +503,18 @@ int set <T> ::findIndex(const T & t) const throw (const char *)
 template <class T>
 set <T> set<T> :: operator || (set <T> & rhs) throw (const char *)
 {
-    for (int i = 0; i < rhs.size(); i++)
+    set <T> sUnion;
+    for (int i = 0; i < size(); i++)
     {
-        insert(rhs[i]);
+        sUnion.insert(data[i]);
     }
 
-    return *this;
+    for (int i = 0; i < rhs.size(); i++)
+    {
+        sUnion.insert(rhs[i]);
+    }
+
+    return sUnion;
 }
 
 /********************************************
@@ -554,8 +560,14 @@ set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
     int indexLhs = 0;
     int indexRhs = 0;
 
-    while (indexLhs < numElements && indexRhs < rhs.numElements)
+    while (indexLhs < numElements)
     {
+        if (indexRhs >= rhs.size())
+        {
+            difference.insert(data[indexLhs]);
+            indexLhs++;
+        }
+
         if (data[indexLhs] == rhs.data[indexRhs])
         {
             indexRhs++;
@@ -564,17 +576,18 @@ set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
             continue;
         }
 
-        if (data[indexLhs] < rhs.data[indexRhs])
+        if (data[indexLhs] > rhs.data[indexRhs])
+        {
+            indexRhs++;
+        }
+        else
         {
             difference.insert(data[indexLhs]);
             indexLhs++;
         }
-        else
-        {
-            difference.insert(rhs.data[indexRhs]);
-            indexRhs++;
-        }
     }
+
+
 
     return difference;
 }
