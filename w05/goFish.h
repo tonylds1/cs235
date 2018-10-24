@@ -4,7 +4,7 @@
 * Summary:
 *    This will contain just the prototype for the goFish() function
 * Author
-*    Maximiliano Correa, Esteban Cabrera and Tony Moraes.
+*    <your names here>
 ************************************************************************/
 
 #ifndef GO_FISH_H
