@@ -17,38 +17,49 @@
 template <class T>
 void sortInsertion(T array[], int num)
 {
-    // create nodes and declare them null
-    Node<T> * unsorted = NULL;
-    Node<T> * sorted = NULL;
-
-    // load array values into unsorted list
-    for (int i = 0; i < num; i++)
-        insert(unsorted, array[i]);
-    
-    // create working current node pointer
-    Node<T> * current = unsorted;
-
-    // process current node and call insertSort
-    while (current != NULL)
-    {
-        Node<T> * next = current->pNext;
-        insertSort(&sorted, current);
-        current = next;
+    if (num == 0) {
+        return;
     }
-
-    int i = 0;
-
-    //set new values to array
-    while (sorted != NULL)
+    
+    Node <T> * pHead = new Node<T> (array[0]);
+    Node <T> * pNew = NULL;
+    Node <T> * p = NULL;
+    
+    // load array values into unsorted list
+    for (int i = 1; i < num; i++)
     {
-        array[i] = sorted->data;
-        sorted = sorted->pNext;
-        i++;
+        pNew = NULL;
+        for (p = pHead; p; p = p->pNext)
+        {
+            if (p->data > array[i])
+            {
+                pNew = insert(p, array[i]);
+                
+                if (p == pHead)
+                {
+                    pHead = pNew;
+                }
+                
+                break;
+            }
+        }
+        
+        // If was not inserted means that it is greater than the others
+        if (!pNew)
+        {
+            insert(p, array[i], true);
+        }
+    }
+    
+    p = pHead;
+    for (int i = 0; i < num; i++) 
+    {
+        array[i] = p->data;
+        p = p->pNext;
     }
 
     // clear the lists
-    freeData(sorted);
-    freeData(unsorted);
+    freeData(pHead);
 }
 
 /***********************************************

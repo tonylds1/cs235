@@ -84,28 +84,36 @@ Node <T> * insert(Node <T> * pNode, const T & data, bool after = false) throw (c
 {
    Node <T> *pNew = new Node <T> (data);
    
-   if (!pNode) // if passed node is uninitialized
-      pNew->data = data; //to revert, change pNode to pNew
-   else if(pNode != NULL && !after) // insert before
+   if (pNode == NULL)
    {
-      if (pNode->pPrev)
-      {
-         pNew->pPrev = pNode->pPrev;
-         pNode->pPrev->pNext = pNew;
-      }
-      pNew->pNext = pNode;
-      pNode->pPrev = pNew;
+      return pNew;
    }
-   else // insert after
+   
+   if (after) 
    {
-      if(pNode->pNext)
-      {
-         pNew->pNext = pNode->pNext;
-         pNode->pNext = pNew;
-      }
+      pNew->pNext = pNode->pNext;
       pNew->pPrev = pNode;
+      
+      if (pNode->pNext)
+      {
+         pNode->pNext->pPrev = pNew;
+      }
+
       pNode->pNext = pNew;
+      
+      return pNew;
    }
+   
+   pNew->pNext = pNode;
+   pNew->pPrev = pNode->pPrev;
+   
+   if (pNode->pPrev)
+   {
+      pNode->pPrev->pNext = pNew;
+   }
+
+   pNode->pPrev = pNew;
+
    return pNew;
 }
 
@@ -181,4 +189,6 @@ std::ostream & operator<<(std::ostream & out, const Node<T> * pHead)
    }
    return out;
 }
+
 #endif // NODE_H
+
