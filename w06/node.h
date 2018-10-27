@@ -174,11 +174,10 @@ Node<T> * find(Node<T> * pHead, const T &t)
    for (Node<T> * p = pHead; p; p = p->pNext)
    {
       if (p->data == t)
-         return pHead;
+         return p;
    }
-   
-   pHead = NULL;
-   return pHead;
+
+   return NULL;
 }
 
 /************************************************
@@ -188,69 +187,31 @@ Node<T> * find(Node<T> * pHead, const T &t)
 template <class T>
 Node<T> * remove(Node<T> * pNode)
 {	
-	/*
-        if(pNode->pNext == NULL)
-        {
-            std::cout << "There is only one node. The list can't be made empty ";
-            return pNode;
-        }
- 		
- 		if (pNode->pPrev != NULL)
- 		{
-        // Copy the data of next node to head 
-        pNode->data = pNode->pPrev->data;
- 
-        // Remove the link of next node
-        pNode->pPrev = pNode->pPrev->pPrev;
- 
-        // free memory
-        //free();
- 
-        return pNode;
-    	}
-    	else
-    	{
-    	 // Copy the data of next node to head 
-         pNode->data = pNode->pNext->data;
- 
-         // Remove the link of next node
-         pNode->pNext = pNode->pNext->pNext;
- 
-         return pNode;
-    	}*/
-
-   if (pNode == NULL || pNode->pNext == NULL)
+   if (pNode == NULL)
    {
    	std::cout << "The list is empty";
    }
    
-   Node <T> * pDelete;
+   Node <T> * pReturn;
 
+   // Fix the pNext pointer from previos node
    if (pNode->pPrev)
    {
-   // 1. save the location of the item before the one we are deleting
-   pNode->pPrev->pNext = pNode->pNext;
-
-   // 2. update the pointer of pPrevious->pNext
-   pDelete = pNode->pPrev;
-   pNode->pNext = pDelete->pNext;
+      pNode->pPrev->pNext = pNode->pNext;
    }
+   
+   //fix the pPrev pointer from next node
    if (pNode->pNext)
    {
    	pNode->pNext->pPrev = pNode->pPrev;
-   	pDelete = pNode->pNext;
-   	pNode->pNext = pDelete->pNext;
    }
 
-   /*
-   	// 1. save the location of the item before the one we are deleting
-   Node<T> * pDelete = pNode->pPrev;
-   // 2. update the pointer of pPrevious->pNext
-   pNode->data = pDelete->data;
-   */
-   // 3. delete the pointer at pDelete
-   delete pDelete;
-   return pNode;
+   //returns previous, next or null;
+   pReturn = pNode->pPrev ? pNode->pPrev : pNode->pNext;
+   
+   delete pNode;
+   //returns who take its place
+   return pReturn;
 }
 
 /************************************************
