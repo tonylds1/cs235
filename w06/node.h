@@ -58,37 +58,17 @@ void freeData(Node<T> * & pHead)
 template <class T>
 Node <T> * copy(Node <T> * pSource)
 {
-	/*	
-   Node <T> *pDestination = new Node <T> (pSource->data);
-   Node <T> *pS = pSource;
-   Node <T> *pD = pDestination;
-   for (pS = pS->pNext; pS; pS = pS->pNext, pD = pD->pNext)
-      pD = insert(pD, pS->data, true);
-   return pDestination;*/
+   Node<T> * pDestination = new Node<T> (pSource->data);
+   Node<T> * pDest = pDestination;
    
-
-	
-   // create new node
-   Node<T> * pNew = new Node<T>;
-   // point to the new copy of node
-   Node<T> * pCopy = pNew;
-   
-   // copy first data item
-   pNew->data = pSource->data;
-   pSource = pSource->pNext;
-   
-   // if head has data, copy the data over
-   while (pSource != NULL)
+   // traverse the list inserting the nodes.
+   for (Node <T> * p = pSource->pNext; p; p = p->pNext)
    {
-      // create new node with data
-      pNew->pNext = new Node<T>(pSource->data);
-      // advance nodes a step
-      pSource = pSource->pNext;
-      pNew = pNew->pNext;
+      pDest = insert(pDest, p->data, true);
    }
    
    // return head of copy node
-   return pCopy;
+   return pDestination;
 }
 
 /*******************************************************************************
@@ -127,40 +107,6 @@ Node <T> * insert(Node <T> * pNode, const T & data, bool after = false) throw (c
       pNode->pNext = pNew;
    }
    return pNew;
-   /*
-   try
-   {
-   	if (after || pNode == NULL)
-   	{
-   		pNew->pNext = pNode;
-   		pNode = pNew;
-   	}
-   	else
-   	{
-   		pNew->pNext = pNode->pNext;
-   		pNode->pNext = pNew;
-   	}
-   }
-   catch(std::string pNode)
-   {
-   		throw "Error: Unable to allocate a new Node";
-   }
-   return pNode;
-/*
-   Node<T> *pNew = new Node <T> (data);
-   if (pNode != NULL && !after)
-   {
-      pNew->pNext = pNode;
-      pNew->pPrev = pNode->pPrev;
-      pCurrent.pPrev = pNew;
-      if (pNew->pPrev)
-         pNew->pPrev->pNext = pNew;
-   }
-   if (pNode != Null && after)
-   {
-   }
-   */
-
 }
 
 /************************************************
