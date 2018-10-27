@@ -22,11 +22,13 @@ public:
    Node * pPrev;
    Node * pNext;
    
-   //Node() : pPrev(NULL), pNext(NULL) { } // data is junk
+   //Default Constructor
    Node() : data(0), pNext(NULL), pPrev(NULL) {}
-   //Node(T t) : data(t), pPrev(NULL), pNext(NULL) {}
+   
+   //Non Default Constructor
    Node(const T &t) : data(t), pPrev(NULL), pNext(NULL) {}
 };
+
 /*******************************************************************************
 * FREE DATA
 * Release all the memory contained in a given linked-list. 
@@ -35,12 +37,6 @@ public:
 template <class T>
 void freeData(Node<T> * & pHead)
 {
-   //recursively free each node
-	/*
-   if (p->pNext) freeData(p->pNext);
-   delete p;
-   p = NULL;
-   */
 
    // delete items from the list
    while (pHead != NULL)
@@ -52,6 +48,7 @@ void freeData(Node<T> * & pHead)
    
    pHead = NULL;
 }
+
 /*******************************************************************************
 * COPY
 * Copies a linked-list. Takes a pointer to a Node as a parameter and returns a 
@@ -93,6 +90,7 @@ Node <T> * copy(Node <T> * pSource)
    // return head of copy node
    return pCopy;
 }
+
 /*******************************************************************************
 * INSERT
 * Inserts a new Node into the current linked-list. The first parameter is the 
