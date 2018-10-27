@@ -1,11 +1,13 @@
 ###############################################################
 # Program:
 #     Assignment 06, NODE
-#     Brother XXXXX, CS235
+#     Brother JonesL, CS235
 # Author:
-#     <your name here>
+#     Maximiliano Correa, Esteban Cabrera and Tony Moraes
 # Summary:
-#     <put a description here>
+#     The Node to be used in a linked list and some methods.
+#     We tried to implement the InsertSorted but some thing was wrong 
+#     with the pointer to insert after.
 ###############################################################
 
 ##############################################################
