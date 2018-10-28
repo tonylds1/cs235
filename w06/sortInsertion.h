@@ -42,6 +42,11 @@ void sortInsertion(T array[], int num)
                 
                 break;
             }
+            
+            if (!p->pNext)
+            {
+                break;
+            }
         }
         
         // If was not inserted means that it is greater than the others
