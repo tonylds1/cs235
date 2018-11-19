@@ -515,7 +515,8 @@ void testInsertionSort()
 
    string array2[100];
    int    num2 = sizeof(array2) / sizeof(array2[0]);
-   ifstream fin("/home/cs235/week06/words.txt");
+   // ifstream fin("/home/cs235/week06/words.txt");
+   ifstream fin("words.txt");
    assert(!fin.fail());
    for (int i = 0; i < num2; i++)
    {

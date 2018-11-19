@@ -1,22 +1,23 @@
 /***********************************************************************
  * Header:
- *    Set
+ *    list
  * Summary:
- *    This class contains the notion of a set: a bucket to hold
+ *    This class contains the notion of a list: a bucket to hold
  *    data for the user.
  *
  *    This will contain the class definition of:
- *       set             : similar to std::set
- *       set :: iterator : an iterator through the set
+ *       list            
+ *       list :: iterator 
  * Author
  *    Maximiliano Correa, Esteban Cabrera, Tony Moraes
  ************************************************************************/
 
-#ifndef SET_H
-#define SET_H
+#ifndef LIST_H
+#define LIST_H
 
 #include <iostream>
 #include <cassert>  // because I am paranoid
+#include "node.h"
 
 // a little helper macro to write debug code
 #ifdef NDEBUG
@@ -29,44 +30,30 @@ namespace custom
 {
 
 /************************************************
- * SET
+ * 
  * A class that holds stuff
  ***********************************************/
 template <class T>
-class set
+class list
 {
 public:
    // constructors and destructors (Create)
-   set(): numElements(0), numCapacity(0) { data = NULL; }
-   set(int numElements)                  throw (const char *);
-   set(int numElements, T & t)           throw (const char *);
-   set(const set & rhs)                  throw (const char *);
-  ~set()                                 { delete [] data;   }
+   list(): numElements(0), pTail(NULL), pHead(NULL);
+   list(const list & rhs)                 throw (const char *);
+  ~list()                                 { freeData(pHead)   }
 
    //Assignment
-   set & operator = (const set & rhs) throw (const char *);
+   list & operator = (const list & rhs) throw (const char *);
    
    // standard container interfaces
    int  size()     const { return numElements;             }
-   int  capacity() const { return numCapacity;             }
    bool empty()    const { return numElements == 0;        }
    void clear()    { numElements = 0;                      };
-
-   // set-specific interfaces
-   // what would happen if I passed -1 or something greater than size?
-   T & operator [] (int index)       throw (const char *)
-   {
-      return data[index];
-   }
-   const T & operator [] (int index) const throw (const char *)
-   {
-      return data[index];
-   }
    
    // the various iterator interfaces
    class iterator;
-   iterator begin()      { return iterator (data);               }
-   iterator end()        { return iterator (data + numElements); };
+   iterator begin()      { return iterator (pHead);               }
+   iterator end()        { return iterator (pTail); };
 
    // the various iterator interfaces
    class const_iterator;
@@ -76,33 +63,35 @@ public:
    iterator find(const T & t) throw (const char *);
    const_iterator find(const T & t) const throw (const char *);
 
-   void insert(const T & t)   throw (const char *);
+   void push_back(const T & t)   throw (const char *);
+   void push_front(const T & t)   throw (const char *);
+   void pop_back(const T & t)   throw (const char *);
+   void pop_front(const T & t)   throw (const char *);
+   
+   T & front()      { return numElements ? pHead->data : NULL; }
+   T & back()       { return numElements ? pTail->data : NULL; }
+   
+   iterator insert(iterator & it, const T & data) throw (const char *);
+   
    void erase(T & t) throw (const char *);
    void erase(iterator & it) throw (const char *);
-
-   set <T> operator || (set <T> & rhs) throw (const char *);
-   set <T> operator && (set <T> & rhs) throw (const char *);
-   set <T> operator - (set <T> & rhs) throw (const char *);
 
    // a debug utility to display the array
    // this gets compiled to nothing if NDEBUG is defined
    void display() const; 
    
 private:
-   T * data;               // dynamically allocated array of T
+   Node <T> * pHead;               
+   Node <T> * pTail;               
    int numElements;               // the number of elements
-   int numCapacity;           // the capacity
-
-   void resize(int newCapacity)         throw (const char *);
-   int findIndex(const T & t) const     throw (const char *);
 };
 
 /**************************************************
- * SET ITERATOR
+ * LIST ITERATOR
  * An iterator through vector
  *************************************************/
 template <class T>
-class set <T> :: iterator
+class list <T> :: iterator
 {
 public:
    // constructors, destructors, and assignment operator
@@ -122,9 +111,6 @@ public:
    // dereference operator
          T & operator * ()       { return *p; }
    const T & operator * () const { return *p; }
-
-   iterator & operator + (int value) { p = p + value; return *this; }
-   iterator & operator - (int value) { p = p - value; return *this; }
 
    // prefix increment
    iterator & operator ++ ()
@@ -165,7 +151,7 @@ private:
  * An iterator through vector
  *************************************************/
 template <class T>
-class set <T> :: const_iterator
+class list <T> :: const_iterator
 {
 public:
    // constructors, destructors, and assignment operator
@@ -223,75 +209,42 @@ private:
 };
 
 /********************************************
- * SET :: FIND
+ * LIST :: FIND
  * returns a iterator pointed to the given element
  ********************************************/
 template <class T>
-typename set <T> :: iterator set <T> :: find(const T & t) throw (const char *)
+typename list <T> :: iterator list <T> :: find(const T & t) throw (const char *)
 {
-    int indexElement = findIndex(t);
-    return begin() + indexElement;
+    return begin();
 }
 
 /********************************************
- * SET :: FIND FOR CONST
+ * LIST :: FIND FOR CONST
  * returns a iterator pointed to the given element
  ********************************************/
 template <class T>
-typename set <T> :: const_iterator set <T> :: find(const T & t) const throw (const char *)
+typename list <T> :: const_iterator list <T> :: find(const T & t) const throw (const char *)
 {
-    int indexElement = findIndex(t);
-    return cbegin() + indexElement;
+    return cbegin();
 }
 
 /********************************************
- * SET :: INSERT
+ * LIST :: INSERT
  * inserts an element in the collection and double the
  * object`s capacity when necessary.
  ********************************************/
 template <class T>
-void set <T> :: insert (const T & t) throw (const char*)
+iterator list <T> list<T> :: insert(iterator & it, const T & data) throw (const char *)
 {
-    assert(numElements <= numCapacity);
-
-    if (0 == numCapacity)
-    {
-        resize(1);
-        numElements = 1;
-        data[0] = t;
-    }
-
-    if (findIndex(t) != numElements)
-    {
-        return;
-    }
-
-    if (numCapacity == numElements)
-    {
-         this->resize(numCapacity * 2);
-    }
-
-    int i = numElements;
-    for (i ; i >= 1; i--)
-    {
-        if (data[i - 1] < t)
-        {
-            break;
-        }
-
-        data[i] = data[i - 1];
-    }
-
-    data[i] = t;
-    numElements++;
+    return pTail->insert(data);
 }
 
 /********************************************
- * SET :: ERASE (VALUE)
+ * LIST :: ERASE (VALUE)
  * delete the given element and re-arrange the others
  ********************************************/
 template <class T>
-void set <T> :: erase(T & t) throw (const char *)
+void list <T> :: erase(T & t) throw (const char *)
 {
     int indexErase = findIndex(t);
 
@@ -309,20 +262,20 @@ void set <T> :: erase(T & t) throw (const char *)
 }
 
 /********************************************
- * SET :: ERASE (ITERATOR)
+ * LIST :: ERASE (ITERATOR)
  * delete the given element and re-arrange the others
  ********************************************/
 template <class T>
-void set <T> :: erase(iterator & it) throw (const char *)
+void list <T> :: erase(iterator & it) throw (const char *)
 {
     erase(*it);
 }
 
 /*******************************************
- * SET :: Assignment
+ * LIST :: Assignment
  *******************************************/
 template <class T>
-set <T> & set <T> :: operator = (const set <T> & rhs)
+list <T> & list <T> :: operator = (const list <T> & rhs)
           throw (const char *)
 {
    //avoid garbage content.
@@ -338,10 +291,10 @@ set <T> & set <T> :: operator = (const set <T> & rhs)
 }
 
 /*******************************************
- * SET :: COPY CONSTRUCTOR
+ * LIST :: COPY CONSTRUCTOR
  *******************************************/
 template <class T>
-set <T> :: set(const set <T> & rhs) throw (const char *)
+list <T> :: list(const list <T> & rhs) throw (const char *)
 {
    assert(rhs.numCapacity >= 0);
       
@@ -378,7 +331,7 @@ set <T> :: set(const set <T> & rhs) throw (const char *)
  * Preallocate the vector to "capacity"
  **********************************************/
 template <class T>
-set <T> :: set(int numCapacity) throw (const char *)
+list <T> :: list(int numCapacity) throw (const char *)
 {
    assert(numCapacity >= 0);
    
@@ -408,11 +361,11 @@ set <T> :: set(int numCapacity) throw (const char *)
 }
 
 /**********************************************
- * SET : NON-DEFAULT CONSTRUCTOR
+ * LIST : NON-DEFAULT CONSTRUCTOR
  * Preallocate the vector to "capacity" and a first element
  **********************************************/
 template <class T>
-set <T> :: set(int numCapacity, T & t) throw (const char *)
+list <T> :: list(int numCapacity, T & t) throw (const char *)
 {
    assert(numCapacity >= 1);
    
@@ -433,11 +386,11 @@ set <T> :: set(int numCapacity, T & t) throw (const char *)
 }
 
 /********************************************
- * SET : RESIZE
+ * LIST : RESIZE
  * Increase the capacity, alocting new memory
  *******************************************/
 template <class T>
-void set <T> ::resize(int newCapacity)  throw (const char *)
+void list <T> ::resize(int newCapacity)  throw (const char *)
 {
     if (newCapacity < numElements)
     {
@@ -465,11 +418,11 @@ void set <T> ::resize(int newCapacity)  throw (const char *)
 }
 
 /********************************************
- * SET : FINDINDEX (SORTED)
- * return the position in the set of the given element
+ * LIST : FINDINDEX (SORTED)
+ * return the position in the list of the given element
  *******************************************/
 template <class T>
-int set <T> ::findIndex(const T & t) const throw (const char *)
+int list <T> ::findIndex(const T & t) const throw (const char *)
 {
     int indexBegin = 0;
     int indexEnd = numElements - 1;
@@ -497,13 +450,13 @@ int set <T> ::findIndex(const T & t) const throw (const char *)
 }
 
 /********************************************
- * SET : UNION
- * return the position in the set of the given element
+ * LIST : UNION
+ * return the position in the list of the given element
  *******************************************/
 template <class T>
-set <T> set<T> :: operator || (set <T> & rhs) throw (const char *)
+list <T> list<T> :: operator || (list <T> & rhs) throw (const char *)
 {
-    set <T> sUnion;
+    list <T> sUnion;
     for (int i = 0; i < size(); i++)
     {
         sUnion.insert(data[i]);
@@ -518,13 +471,13 @@ set <T> set<T> :: operator || (set <T> & rhs) throw (const char *)
 }
 
 /********************************************
- * SET : INTERSECTION
- * return the position in the set of the given element
+ * LIST : INTERSECTION
+ * return the position in the list of the given element
  *******************************************/
 template <class T>
-set <T> set<T> :: operator && (set <T> & rhs) throw (const char *)
+list <T> list<T> :: operator && (list <T> & rhs) throw (const char *)
 {
-    set <T> intersection;
+    list <T> intersection;
     int indexLhs = 0;
     int indexRhs = 0;
 
@@ -550,13 +503,13 @@ set <T> set<T> :: operator && (set <T> & rhs) throw (const char *)
 }
 
 /********************************************
- * SET : DIFFERENCE
- * return the position in the set of the given element
+ * LIST : DIFFERENCE
+ * return the position in the list of the given element
  *******************************************/
 template <class T>
-set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
+list <T> list<T> :: operator - (list <T> & rhs) throw (const char *)
 {
-    set <T> difference;
+    list <T> difference;
     int indexLhs = 0;
     int indexRhs = 0;
 
@@ -594,14 +547,14 @@ set <T> set<T> :: operator - (set <T> & rhs) throw (const char *)
 
 
 /********************************************
- * SET : DISPLAY
+ * LIST : DISPLAY
  * A debug utility to display the contents of the array
  *******************************************/
 template <class T>
-void set <T> :: display() const
+void list <T> :: display() const
 {
 #ifndef NDEBUG
-   std::cerr << "set<T>::display()\n";
+   std::cerr << "list<T>::display()\n";
    std::cerr << "\tnumElements = " << numElements << "\n";
    for (int i = 0; i < numElements; i++)
       std::cerr << "\tdata[" << i << "] = " << data[i] << "\n";
@@ -610,5 +563,5 @@ void set <T> :: display() const
 
 }; // namespace custom
 
-#endif // SET_H
+#endif // LIST_H
 
