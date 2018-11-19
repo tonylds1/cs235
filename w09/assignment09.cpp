@@ -32,7 +32,7 @@ void testBalance();
 #define TEST2   // for testAdd()
 #define TEST3   // for testIterate()
 #define TEST4   // for testDelete()
-#define TESTA   // for testBalance()
+// #define TESTA   // for testBalance()
 
 /**********************************************************************
  * MAIN
@@ -213,6 +213,7 @@ void testIterate()
       tree1.insert(2.2);     //          2.2
       tree1.insert(1.1);     //     +-----+-----+    
       tree1.insert(3.3);     //    1.1         3.3
+      
       cout << "\tContents forward:  " << tree1 << endl;
 
       // copy the tree and clear the first
