@@ -1,13 +1,14 @@
 ###############################################################
 # Program:
 #     Assignment 09, Binary Search Tree
-#     Brother XXXXX, CS235
+#     Brother JonesL, CS235
 # Author:
-#     <your name here>
+#     Maximiliano Correa, Esteban Cabrera and Tony Moraes
 # Summary:
-#     <put a description here>
+#     We try to make the 4 tests but that assignment show to be more
+# complicated. 
 # Time:
-#     <how long did it take to complete this program?>
+#     5 days.
 ###############################################################
 
 ##############################################################
